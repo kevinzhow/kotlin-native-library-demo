@@ -58,7 +58,9 @@ kotlin {
             dependsOn(commonMain)
         }
 
-        val macosX64Main by getting
+        val macosMain by sourceSets.creating {
+            dependsOn(commonMain)
+        }
 
         val iosArm64Main by getting {
             dependsOn(iosMain)
@@ -66,6 +68,10 @@ kotlin {
 
         val iosX64Main by getting {
             dependsOn(iosMain)
+        }
+
+        val macosX64Main by getting {
+            dependsOn(macosMain)
         }
 
         val iosTest by creating
