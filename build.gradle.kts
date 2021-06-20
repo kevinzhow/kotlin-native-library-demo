@@ -15,6 +15,13 @@ repositories {
 
 kotlin {
     android()
+    macosX64("macosX64") {
+        binaries {
+            framework {
+                baseName = "happy-lib"
+            }
+        }
+    }
     iosX64("iosX64") {
         binaries {
             framework {
@@ -50,6 +57,8 @@ kotlin {
         val iosMain by sourceSets.creating {
             dependsOn(commonMain)
         }
+
+        val macosX64Main by getting
 
         val iosArm64Main by getting {
             dependsOn(iosMain)
