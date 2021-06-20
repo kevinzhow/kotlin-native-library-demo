@@ -15,10 +15,17 @@ repositories {
 
 kotlin {
     android()
-    iosX64("ios") {
+    iosX64("iosX64") {
         binaries {
             framework {
-                baseName = "library"
+                baseName = "happy-lib"
+            }
+        }
+    }
+    iosArm64("iosArm64") {
+        binaries {
+            framework {
+                baseName = "happy-lib"
             }
         }
     }
@@ -39,8 +46,20 @@ kotlin {
                 implementation("junit:junit:4.13")
             }
         }
-        val iosMain by getting
-        val iosTest by getting
+
+        val iosMain by sourceSets.creating {
+            dependsOn(commonMain)
+        }
+
+        val iosArm64Main by getting {
+            dependsOn(iosMain)
+        }
+
+        val iosX64Main by getting {
+            dependsOn(iosMain)
+        }
+
+        val iosTest by creating
     }
 }
 
