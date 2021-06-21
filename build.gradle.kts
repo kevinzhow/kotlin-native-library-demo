@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform") version "1.5.10"
+    kotlin("plugin.serialization") version "1.5.10"
     id("com.android.library")
     id("kotlin-android-extensions")
 }
