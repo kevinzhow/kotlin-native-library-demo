@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.FatFrameworkTask
+
 plugins {
     kotlin("multiplatform") version "1.5.10"
     kotlin("plugin.serialization") version "1.5.10"
@@ -17,27 +19,9 @@ repositories {
 
 kotlin {
     android()
-    macosX64("macos") {
-        binaries {
-            framework {
-                baseName = "happy-lib"
-            }
-        }
-    }
-    iosX64("ios") {
-        binaries {
-            framework {
-                baseName = "happy-lib"
-            }
-        }
-    }
-    iosArm64("iosArm64") {
-        binaries {
-            framework {
-                baseName = "happy-lib"
-            }
-        }
-    }
+    val macos = macosX64("macos")
+    val ios = iosX64("ios")
+    val iosArm64 = iosArm64("iosArm64")
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -83,6 +67,12 @@ kotlin {
 
         val macosTest by getting {
             dependsOn(commonTest)
+        }
+
+        configure(listOf(ios, iosArm64, macos)) {
+            binaries.framework(listOf(RELEASE)) {
+                baseName = "HappyNasa"
+            }
         }
     }
 }
