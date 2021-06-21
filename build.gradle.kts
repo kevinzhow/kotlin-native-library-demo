@@ -2,6 +2,7 @@ import org.jetbrains.kotlin.gradle.tasks.FatFrameworkTask
 
 plugins {
     kotlin("multiplatform") version "1.5.10"
+    // add serialization plugin
     kotlin("plugin.serialization") version "1.5.10"
     id("com.android.library")
     id("kotlin-android-extensions")
@@ -48,6 +49,7 @@ kotlin {
         val iosMain by getting {
             dependsOn(commonMain)
             dependencies {
+                // Config ktor for ios
                 implementation("io.ktor:ktor-client-ios:$ktorVersion")
             }
         }
@@ -59,6 +61,7 @@ kotlin {
         val macosMain by getting {
             dependsOn(commonMain)
             dependencies {
+                // config ktor for macOS
                 implementation("io.ktor:ktor-client-curl:$ktorVersion")
             }
         }
