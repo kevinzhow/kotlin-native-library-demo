@@ -6,6 +6,7 @@ plugins {
 
 group = "me.zhoukaiwen"
 version = "1.0-SNAPSHOT"
+val ktorVersion = "1.6.0"
 
 repositories {
     google()
@@ -15,14 +16,14 @@ repositories {
 
 kotlin {
     android()
-    macosX64("macosX64") {
+    macosX64("macos") {
         binaries {
             framework {
                 baseName = "happy-lib"
             }
         }
     }
-    iosX64("iosX64") {
+    iosX64("ios") {
         binaries {
             framework {
                 baseName = "happy-lib"
@@ -37,7 +38,12 @@ kotlin {
         }
     }
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-serialization:$ktorVersion")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -54,27 +60,29 @@ kotlin {
             }
         }
 
-        val iosMain by sourceSets.creating {
+        val iosMain by getting {
             dependsOn(commonMain)
-        }
-
-        val macosMain by sourceSets.creating {
-            dependsOn(commonMain)
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:$ktorVersion")
+            }
         }
 
         val iosArm64Main by getting {
             dependsOn(iosMain)
         }
 
-        val iosX64Main by getting {
-            dependsOn(iosMain)
+        val macosMain by getting {
+            dependsOn(commonMain)
+            dependencies {
+                implementation("io.ktor:ktor-client-curl:$ktorVersion")
+            }
         }
 
-        val macosX64Main by getting {
-            dependsOn(macosMain)
-        }
+        val iosTest by getting
 
-        val iosTest by creating
+        val macosTest by getting {
+            dependsOn(commonTest)
+        }
     }
 }
 
