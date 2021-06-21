@@ -7,6 +7,18 @@ import io.ktor.client.request.*
 import io.ktor.client.statement.*
 import kotlinx.serialization.*
 
+/**
+ * Astronomy Picture of the Day
+ *
+ *  This endpoint structures the APOD imagery and associated metadata so that it can be repurposed for other applications.
+ *
+ * @property date The date of the APOD image to retrieve
+ * @property title The title of the image.
+ * @property hdurl The URL for any high-resolution image for that day. Returned regardless of 'hd' param setting but will be omitted in the response IF it does not exist originally at APOD.
+ * @property explanation The supplied text explanation of the image.
+ * @property url The URL of the APOD image or video of the day.
+ * @property media_type The type of media (data) returned. May either be 'image' or 'video' depending on content.
+ */
 @Serializable
 @SerialName("APOD")
 data class APOD(val date: String,
